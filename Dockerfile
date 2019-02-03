@@ -1,10 +1,8 @@
-FROM alpine as downloader
-RUN mkdir crxmake && \
+FROM alpine
+RUN mkdir -p /app/crxmake && \
   wget https://github.com/mcuadros/go-crxmake/releases/download/v0.2.0/crxmake_v0.2.0_linux_amd64.tar.gz -O - | \
-  tar zx -C crxmake --strip-components 1
+  tar zx -C /app/crxmake --strip-components 1
 
-FROM scratch
-COPY --from=downloader /crxmake /crxmake
-WORKDIR /crxmake
-CMD ["--help"]
-ENTRYPOINT ["./crxmake"]
+COPY entrypoint.sh /app/entrypoint.sh
+CMD ["crxmake"]
+ENTRYPOINT ["/app/entrypoint.sh"]
