@@ -4,5 +4,6 @@ RUN mkdir -p /app/crxmake && \
   tar zx -C /app/crxmake --strip-components 1
 
 COPY entrypoint.sh /app/entrypoint.sh
+ENV PATH /app/crxmake:$PATH
 CMD ["crxmake"]
 ENTRYPOINT ["/app/entrypoint.sh"]
